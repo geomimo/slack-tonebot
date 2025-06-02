@@ -1,4 +1,4 @@
-from flask import request, make_response, Response
+from flask import request, Response
 from flask.views import MethodView
 from flask_smorest import Blueprint
 
