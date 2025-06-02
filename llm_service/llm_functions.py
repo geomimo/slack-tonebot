@@ -1,15 +1,14 @@
-# """
-# llm_functions.py
-# Functions related to LLM interactions.
-# This module provides functions to detect the tone of a message using OpenAI's API.
-# """
+"""
+llm_functions.py
+Functions related to LLM interactions.
+This module provides functions to detect the tone of a message.
+"""
 import os
+import json
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-import json
 from pydantic import BaseModel
-
 # from openai import OpenAI
 
 load_dotenv()

@@ -1,22 +1,25 @@
+"""
+Module for handling tone detection requests from Slack.
+"""
 from flask import request, Response
 from flask.views import MethodView
 from flask_smorest import Blueprint
 
 from llm_service.llm_functions import detect_tone
-from slack_service.slack_functions import SlackPayload, send_ephemeral_tone_message, get_latest_message_block
+from slack_service.slack_functions import (
+    SlackPayload,
+    send_ephemeral_tone_message,
+    get_latest_message_block
+)
 
-
-# from models import ItemModel
-# from schemas import ItemSchema, ItemUpdateSchema
-#
 blp = Blueprint("Tone", "tone", description="Slash commands")
-
 
 @blp.route("/detect-tone")
 class ToneDetection(MethodView):
     """
     Endpoint for detecting the tone of a message sent via Slack.
-    This endpoint processes a Slack event, extracts the message text, and detects its tone."""
+    This endpoint processes a Slack event, extracts the message text, and detects its tone.
+    """
     @blp.response(200)
     def post(self):
         """

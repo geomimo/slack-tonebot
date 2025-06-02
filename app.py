@@ -1,14 +1,15 @@
+"""
+Tone Detection API using Flask
+"""
 from flask import Flask
 from flask_smorest import Api
 
-
-# from db import db
-
 from resources.tone import blp as ToneBlueprint
 
-
-
 def create_app():
+    """
+    Create and configure the Flask application.
+    """
     app = Flask(__name__)
     app.config["API_TITLE"] = "Tone Detection API"
     app.config["API_VERSION"] = "v1"
@@ -27,6 +28,5 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    app = create_app()
-    # db.init_app(app)
-    app.run(debug=True, port=8080)
+    f_app = create_app()
+    f_app.run(debug=True, port=8080)

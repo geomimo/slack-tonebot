@@ -4,16 +4,16 @@
 """
 import os
 from slack_sdk import WebClient
-# from slack_sdk.signature import SignatureVerifier
-from dotenv import load_dotenv
 from slack_sdk.errors import SlackApiError
+
+from dotenv import load_dotenv
 
 load_dotenv()
 
 slack_token = os.getenv("SLACK_BOT_TOKEN")
 client = WebClient(token=slack_token)
 
-def get_slack_users():
+def _get_slack_users():
     """
     Fetches the list of users in the Slack workspace.
     Returns a list of user IDs and names.
@@ -25,8 +25,8 @@ def get_slack_users():
     except SlackApiError as e:
         print(f"Error fetching users: {e.response['error']}")
         return []
-    
-SLACK_USERS = get_slack_users()
+
+SLACK_USERS = _get_slack_users()
 
 class SlackPayload:
     """
@@ -57,7 +57,7 @@ def get_latest_message_block(channel_id, user_id):
         response = client.conversations_history(channel=channel_id, limit=20)
         messages = response.get('messages', [])
         messages.sort(key=lambda x: x['ts'], reverse=True)
-        
+
         # Find the latest message not sent by the bot/user
         for message in messages:
             if message.get('user') and message['user'] != user_id and 'subtype' not in message:
@@ -76,7 +76,8 @@ def send_ephemeral_tone_message(channel_id, user_id, detected_tone):
         response = client.chat_postEphemeral(
             channel=channel_id,
             user=user_id,
-            text=f"""Detected tone: {detected_tone['tone'].capitalize()}\nWhy? {detected_tone['explanation']}"""
+            text=f"""Detected tone: {detected_tone['tone'].capitalize()}\n """ \
+                """Why? {detected_tone['explanation']}"""
         )
         return response
     except SlackApiError as e:
