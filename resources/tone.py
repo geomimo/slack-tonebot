@@ -35,6 +35,6 @@ class ToneDetection(MethodView):
     @blp.response(200)
     def get(self):
         """
-        Detects the tone of a message sent via Slack.
+        Test endpoint to verify the service is running.
         """
-        return "hell there"
+        return "hello there"
