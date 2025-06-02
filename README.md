@@ -32,3 +32,14 @@ Slack ToneBot is a bot for Slack that analyzes the tone of messages in your work
     run.bat
     ```
 
+## Project Structure
+The project is structured in such a way to decouple the logic of the application and allow faster developing from multiple devs.
+
+- `/llm_service/`: Handles interactions with the LLM API
+    - `llm_functions`: Functions for communicating with the LLM API
+- `/slack_service/`: Handles interactions with the Slack API
+    - `slack_function`: Functions for communicating with the Slack API
+- `/resources/`: Application endpoints
+    - `tone`: Defines endpoints for slash commands and coordinates the logic
+- `app.py`: Initializes the Flask application
+- `run.bat`: Runs the Flask application and ngrok
