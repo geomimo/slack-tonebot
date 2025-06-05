@@ -30,6 +30,6 @@ def create_app():
 
     return app
 
-if __name__ == "__main__":
-    f_app = create_app()
-    f_app.run(port=8080, debug=False)
+
+app = create_app()
+app.run(port=8080, debug=False)
