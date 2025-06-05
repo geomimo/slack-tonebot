@@ -14,7 +14,6 @@ def create_app():
     Create and configure the Flask application.
     """
     app = Flask(__name__)
-    app.config["DEBUG"] = os.getenv("FLASK_DEBUG", "True")
     app.config["API_TITLE"] = "Tone Detection API"
     app.config["API_VERSION"] = "v1"
     app.config["OPENAPI_VERSION"] = "3.0.3"
@@ -33,4 +32,4 @@ def create_app():
 
 if __name__ == "__main__":
     f_app = create_app()
-    f_app.run(port=8080)
+    f_app.run(port=8080, debug=False)
