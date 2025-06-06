@@ -31,5 +31,18 @@ class EventPayload:
     def __init__(self, request):
         json_data = request.get_json()
         self.token = json_data.get('token')
-        self.challenge = json_data.get('challenge')
+        self.team_id = json_data.get('team_id')
+        self.context_team_id = json_data.get('context_team_id')
+        self.context_enterprise_id = json_data.get('context_enterprise_id')
+        self.api_app_id = json_data.get('api_app_id')
+        self.event = json_data.get('event')
         self.type = json_data.get('type')
+        self.event_id = json_data.get('event_id')
+        self.event_time = json_data.get('event_time')
+        self.authorizations = json_data.get('authorizations')
+        self.is_ext_shared_channel = json_data.get('is_ext_shared_channel')
+        self.event_context = json_data.get('event_context')
+        self.challenge = json_data.get('challenge')
+
+
+

@@ -43,7 +43,7 @@ class ToneDetection(MethodView):
         return "hello there"
     
 
-@blp.route("/slack-events")
+@blp.route("/slack/events")
 class SlackEvents(MethodView):
     """
     Endpoint for handling Slack event subscriptions.
