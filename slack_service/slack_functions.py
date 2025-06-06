@@ -28,25 +28,6 @@ def _get_slack_users():
 
 SLACK_USERS = _get_slack_users()
 
-class SlackPayload:
-    """
-    Represents a Slack event payload.
-    This class is used to encapsulate the data received from Slack events.
-    """
-
-    def __init__(self, request_form):
-        self.token = request_form['token']
-        self.team_id = request_form.get('team_id')
-        self.team_domain = request_form.get('team_domain')
-        self.channel_id = request_form.get('channel_id')
-        self.channel_name = request_form.get('channel_name')
-        self.user_id = request_form.get('user_id')
-        self.user_name = request_form.get('user_name')
-        self.command = request_form.get('command')
-        self.text = request_form.get('text')
-        self.response_url = request_form.get('response_url')
-        self.trigger_id = request_form.get('trigger_id')
-
 def get_latest_message_block(channel_id, user_id):
     """
     Extracts the latest message sent from another user in the specified channel.
