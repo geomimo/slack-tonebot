@@ -54,4 +54,11 @@ class SlackEvents(MethodView):
         Handles incoming Slack events.
         """
         payload = EventPayload(request)
-        return {"challenge": payload.challenge}, 200
+
+        if payload.type == "url_verification":
+            return {"challenge": payload.challenge}, 200
+    
+    
+        return Response(), 200
+
+        
