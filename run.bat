@@ -7,4 +7,4 @@ REM Wait a few seconds to ensure Flask starts
 timeout /t 3
 
 REM Start ngrok in the current window
-ngrok http --url=wren-proper-sadly.ngrok-free.app 8080
+ngrok http --url=lasting-narwhal-exotic.ngrok-free.app 8080

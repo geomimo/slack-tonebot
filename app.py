@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_smorest import Api
 from resources.tone import blp as ToneBlueprint
+from resources.tone import slack_interactions as SlackInteractionsBlueprint
+from resources.tone import slack_events
 
 load_dotenv()
 
@@ -28,6 +30,9 @@ def create_app():
 
 
     api.register_blueprint(ToneBlueprint)
+    api.register_blueprint(SlackInteractionsBlueprint)
+    app.register_blueprint(slack_events, url_prefix='/slack')
+
 
     return app
 
