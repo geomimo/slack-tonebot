@@ -2,6 +2,9 @@
 This module defines classes to represent payloads from Slack events and slash commands.
 """
 
+import json
+
+
 class SlashPayload:
     """
     Represents a Slack event payload.
@@ -44,5 +47,24 @@ class EventPayload:
         self.event_context = json_data.get('event_context')
         self.challenge = json_data.get('challenge')
 
+
+class InteractionPayload:
+    """
+    Represents a Slack interaction payload.
+    This class is used to encapsulate the data received from Slack interactions.
+    """
+
+    def __init__(self, request):
+        json_data = json.loads(request.form['payload'])
+        self.type = json_data.get('type')
+        self.token = json_data.get('token')
+        self.action_ts = json_data.get('action_ts')
+        self.response_url = json_data.get('response_url')
+        self.user = json_data.get('user')
+        self.team = json_data.get('team')
+        self.container = json_data.get('container')
+        self.trigger_id = json_data.get('trigger_id')
+        self.actions = json_data.get('actions', [])
+        self.channel = json_data.get('channel')
 
 
