@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 slack_token = os.getenv("SLACK_BOT_TOKEN")
+slack_signing_secret = os.getenv("MY_SLACK_SIGNING_SECRET")
 client = WebClient(token=slack_token)
 
 def _get_slack_users():
@@ -68,18 +69,58 @@ def get_latest_message_block(channel_id, user_id):
         return None
 
 
+tone_emojis = {
+    "positive": "😊",
+    "negative": "😞",
+    "neutral": "😐",
+    "angry": "😠",
+    "sad": "😢",
+    "happy": "😄",
+    "confused": "😕",
+    "excited": "🤩"
+}
+
+
 def send_ephemeral_tone_message(channel_id, user_id, detected_tone):
-    """
-    Sends an ephemeral message to a user in a Slack channel with the detected tone.
-    """
     try:
+        tone = detected_tone.get('tone', 'N/A')
+        emoji = tone_emojis.get(tone.lower(), "")  # get emoji or empty if not found
+        # Compose the message blocks
+        blocks = [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": (
+                        f"*Original message:* {detected_tone.get('original_message', 'N/A')}\n"
+                        f"*Detected tone:* {detected_tone.get('tone', 'N/A').capitalize()} {emoji}\n"
+                        f"*Why:* {detected_tone.get('explanation', 'No explanation available.')}\n"
+                        f"*Urgency:* {detected_tone.get('urgency', 'N/A')}\n"
+                        f"*Confidence:* {detected_tone.get('confidence', 'N/A')}%"
+                    )
+                }
+            }
+            # ,{
+            #     "type": "actions",
+            #     "elements": [
+            #         {
+            #             "type": "button",
+            #             "text": {"type": "plain_text", "text": reply},
+            #             "value": reply,
+            #             "action_id": f"quick_reply_{i}"
+            #         }
+            #         for i, reply in enumerate(detected_tone.get("quick_replies", []))
+            #     ]
+            # }
+        ]
         response = client.chat_postEphemeral(
             channel=channel_id,
             user=user_id,
-            text=f"""Detected tone: {detected_tone['tone'].capitalize()}\n """ \
-                """Why? {detected_tone['explanation']}"""
+            blocks=blocks,
+            text="Detected tone and quick replies"
         )
         return response
     except SlackApiError as e:
         print(f"Error sending ephemeral message: {e.response['error']}")
         return None
+    
