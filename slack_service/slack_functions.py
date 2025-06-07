@@ -76,8 +76,7 @@ def send_ephemeral_tone_message(channel_id, user_id, detected_tone):
         response = client.chat_postEphemeral(
             channel=channel_id,
             user=user_id,
-            text=f"""Detected tone: {detected_tone['tone'].capitalize()}\n """ \
-                """Why? {detected_tone['explanation']}"""
+            text=f"Detected tone: {detected_tone['tone'].capitalize()}\n{detected_tone['explanation']}"
         )
         return response
     except SlackApiError as e:

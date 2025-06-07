@@ -14,7 +14,7 @@ from slack_service.slack_functions import (
 
 blp = Blueprint("Tone", "tone", description="Slash commands")
 
-@blp.route("/detect-tone")
+@blp.route("/detect-tone-kat")
 class ToneDetection(MethodView):
     """
     Endpoint for detecting the tone of a message sent via Slack.
