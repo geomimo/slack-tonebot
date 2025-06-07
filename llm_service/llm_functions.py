@@ -151,3 +151,38 @@ def detect_tone(text: str) -> str:
 
     return response_model
 
+
+def translate_to_greek_with_tone(text):
+    """
+    Translates the original message to Greek, preserving tone, emotion, and urgency.
+    Uses Gemini (or OpenAI) for context-aware translation.
+    """
+    prompt = (
+        "Translate the following message to Greek, preserving the tone, emotion, and urgency. "
+        "Return ONLY the translated Greek sentence, with no explanation, no romanization, and no extra text. "
+        "Message: " + text
+    )
+    response = client.models.generate_content(
+        model=MODEL,
+        contents=prompt
+    )
+    return response.text.strip()
+
+
+def summarize_conversation(messages):
+    """
+    Summarizes a list of Slack messages using the LLM.
+    """
+    # Format messages for the prompt
+    conversation = "\n".join(
+        [f"{m.get('user', 'Someone')}: {m.get('text', '')}" for m in messages]
+    )
+    prompt = (
+        "Summarize the following Slack thread. "
+        "List key takeaways and any action items or decisions. Be concise.\n"
+        f"Thread:\n{conversation}"
+    )
+    response = client.models.generate_content(
+        model=MODEL,
+        contents=prompt
+    )

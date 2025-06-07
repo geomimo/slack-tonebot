@@ -6,7 +6,7 @@ from flask import request, Response
 from flask.views import MethodView
 from flask_smorest import Blueprint
 
-from llm_service.llm_functions import detect_tone
+from llm_service.llm_functions import detect_tone, translate_to_greek_with_tone
 from slack_service.slack_functions import (
     is_user_opted_in,
     post_analyze_button,
@@ -112,13 +112,9 @@ class SlackInteractions(MethodView):
         if button_action['action_id'].startswith("quick_reply_"):
             send_simple_message(payload.channel['id'], button_action['value'])
         elif button_action['action_id'] == "translate_to_greek":
-            pass
-            # translated_text = translate_to_greek_with_tone(original_message)
-            # # Send the translated message as an ephemeral message
-            # send_simple_ephemeral_message(
-            #     channel_id,
-            #     user_id,
-            #     f"🇬🇷 *Translation (tone preserved):*\n{translated_text}"
+            translated_text = translate_to_greek_with_tone(button_action['value'])
+            # Send the translated message as an ephemeral message
+            send_simple_ephemeral_message(payload.channel['id'], payload.user['id'], f"🇬🇷 *Translation (tone preserved):*\n{translated_text}")
         elif button_action['action_id'] == "analyze_message":
             pass
             # # User clicked "Analyze this message"
